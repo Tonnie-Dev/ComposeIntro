@@ -7,11 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -61,15 +60,32 @@ fun MyScreenContent(names: List<String> = listOf("Tonnie", "GOAT", "Antony")) {
 
         for (name in names) {
             Greeting(name)
-            Divider(color = Color.Red)
             Spacer(modifier = Modifier.height(8.dp))
+            Divider(color = Color.Red, thickness = 12.dp)
 
         }
+        Spacer(modifier = Modifier.height(8.dp))
+        Counter()
     }
 
 }
 
-@Preview(showBackground = true)
+
+
+@Composable
+fun Counter(){
+
+
+    val count = remember{ mutableStateOf(0)}
+
+
+    Button(onClick = { count.value++ }) {
+
+        Text("I've been clicked ${count.value} times")
+    }
+
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
