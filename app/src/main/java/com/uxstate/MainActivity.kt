@@ -7,7 +7,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.uxstate.ui.theme.ComposeIntroTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,10 +28,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+
+    Surface(color = Color.Red){
+
+        Text(text = "Hello $name!")
+    }
+
 }
 
-@Preview(showBackground = true)
+
+@Preview(showBackground = true, name = "F1.5", fontScale = 1.5f)
+@Preview(showBackground = true, fontScale = 1.0f, name = "F1.0")
 @Composable
 fun DefaultPreview() {
     ComposeIntroTheme {
