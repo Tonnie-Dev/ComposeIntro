@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -27,11 +29,10 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
 @Composable
-fun MyApp(content:@Composable ()-> Unit){
+fun MyApp(content: @Composable () -> Unit) {
     ComposeIntroTheme {
-        Surface(color = Color.Magenta){
+        Surface(color = Color.Magenta) {
 
 
             content()
@@ -46,30 +47,30 @@ fun MyApp(content:@Composable ()-> Unit){
 fun Greeting(name: String) {
 
 
-
-        Text(text = "Hello $name!" ,modifier = Modifier.padding(8.dp))
+    Text(text = "Hello $name!", modifier = Modifier.padding(8.dp))
 
 
 }
 
 
 @Composable
-fun MyScreenContent(){
+fun MyScreenContent(names: List<String> = listOf("Tonnie", "GOAT", "Antony")) {
 
 
-    Column{
+    Column {
 
-        Greeting("Android")
-        Divider(color = Color.Black)
-        Greeting("There")
+        for (name in names) {
+            Greeting(name)
+            Divider(color = Color.Red)
+            Spacer(modifier = Modifier.height(8.dp))
 
-
+        }
     }
 
 }
 
-@Preview(showBackground = true, name = "F1.5", fontScale = 1.5f)
-@Preview(showBackground = true, fontScale = 1.0f, name = "F1.0")
+@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ComposeIntroTheme {
