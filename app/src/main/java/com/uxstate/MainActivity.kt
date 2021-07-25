@@ -3,7 +3,9 @@ package com.uxstate
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -19,32 +21,60 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeIntroTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
+            MyApp { MyScreenContent() }
         }
     }
+}
+
+
+
+@Composable
+fun MyApp(content:@Composable ()-> Unit){
+    ComposeIntroTheme {
+        Surface(color = Color.Magenta){
+
+
+            content()
+        }
+
+
+    }
+
 }
 
 @Composable
 fun Greeting(name: String) {
 
-    Surface(color = Color.Red){
+
 
         Text(text = "Hello $name!" ,modifier = Modifier.padding(8.dp))
-    }
+
 
 }
 
+
+@Composable
+fun MyScreenContent(){
+
+
+    Column{
+
+        Greeting("Android")
+        Divider(color = Color.Black)
+        Greeting("There")
+
+
+    }
+
+}
 
 @Preview(showBackground = true, name = "F1.5", fontScale = 1.5f)
 @Preview(showBackground = true, fontScale = 1.0f, name = "F1.0")
 @Composable
 fun DefaultPreview() {
     ComposeIntroTheme {
-        Greeting("Android")
+        MyApp {
+            MyScreenContent()
+        }
     }
 }
