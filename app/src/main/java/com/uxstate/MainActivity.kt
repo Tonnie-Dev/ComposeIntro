@@ -18,11 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.uxstate.ui.theme.ComposeIntroTheme
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApp { MyScreenContent() }
+            AppContainer{}
         }
     }
 }
@@ -60,11 +61,11 @@ fun MyScreenContent(names: List<String> = listOf("Tonnie", "GOAT", "Antony")) {
 
         for (name in names) {
             Greeting(name)
-            Spacer(modifier = Modifier.height(8.dp))
-            Divider(color = Color.Red, thickness = 12.dp)
 
+            Divider(color = Color.Red)
+            Spacer(modifier = Modifier.height(8.dp))
         }
-        Spacer(modifier = Modifier.height(8.dp))
+        Divider(color = Color.Transparent, thickness = 32.dp)
         Counter()
     }
 
@@ -94,4 +95,21 @@ fun DefaultPreview() {
             MyScreenContent()
         }
     }
+}
+
+
+
+
+
+@Composable
+fun AppContainer(fxn:@Composable ()-> Unit){
+
+    ComposeIntroTheme{
+
+        Surface(color = Color.Black) {
+            fxn()
+        }
+    }
+
+
 }
