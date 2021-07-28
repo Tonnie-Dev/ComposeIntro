@@ -1,14 +1,13 @@
 package com.uxstate
 
+import android.graphics.Paint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,12 +22,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             /*AppContainer is passed an empty function
             where we call the MyScreenContent composable*/
-            AppContainer {MyScreenContent()}
+            AppContainer { MyScreenContent() }
         }
     }
 }
-
-
 
 
 @Composable
@@ -41,29 +38,43 @@ fun Greeting(name: String) {
 }
 
 
+
+
+
 @Composable
-fun MyScreenContent(names: List<String> = listOf("GOAT", "Tonnie")) {
+fun MyScreenContent(
+    cities: List<String> = listOf(
+        "Tokyo",
+        "London",
+        "Conakry",
+        "Nairobi",
+        "Pretoria",
+        "Brasilia"
+    )
+) {
 
-//wrap in Column for vertical orientation.
     Column {
-        for (name in names) {
+        for (city in cities) {
 
-            Greeting(name)
 
-            //add Divider and Spacer
-            Divider(color = Color.Red, thickness = 2.dp)
-            Spacer(Modifier.height(8.dp))
+            Text(text = city, modifier = Modifier.padding(8.dp))
+            Divider(color = Color.Green, thickness = 2.dp)
 
         }
 
-        Counter()
+        Spacer(Modifier.height(8.dp))
+
+
+        // create internal count value making this Composable Stateful
+        var count by remember { mutableStateOf(0) }
+
+        //Call CounterHoisted pass in the count and modify/update the count
+        CounterHoisted(count) { newCount -> count = newCount }
     }
 }
 
 
-
-
-
+/*
 @Composable
 fun Counter() {
 
@@ -77,7 +88,7 @@ fun Counter() {
         Text(text = "Have been clicked ${count.value} times")
     }
   
-}
+}*/
 
 @Preview(showBackground = true)
 @Composable
@@ -85,7 +96,8 @@ fun DefaultPreview() {
     ComposeIntroTheme {
         AppContainer {
             MyScreenContent()
-	}    }
+        }
+    }
 }
 
 
@@ -94,10 +106,26 @@ fun AppContainer(fxn: @Composable () -> Unit) {
 
     ComposeIntroTheme {
 
-        Surface(color = Color.Yellow) {
+        Surface(color = Color.Yellow, modifier = Modifier.fillMaxHeight()) {
             fxn()
         }
     }
 
+
+}
+
+
+@Composable
+fun CounterHoisted(count: Int, updateCounter: (Int) -> Unit) {
+
+    Row {
+        //invoke updateCounter fxn passing in the count value
+        Button(onClick = { updateCounter(count + 1) }) {
+
+            //Display Text
+            Text(text = "Button Clicked $count times")
+
+        }
+    }
 
 }
