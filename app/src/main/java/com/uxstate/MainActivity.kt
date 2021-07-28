@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,25 +21,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            AppContainer{}
+            /*AppContainer is passed an empty function
+            where we call the MyScreenContent composable*/
+            AppContainer {MyScreenContent()}
         }
     }
 }
 
 
-@Composable
-fun MyApp(content: @Composable () -> Unit) {
-    ComposeIntroTheme {
-        Surface(color = Color.Magenta) {
 
-
-            content()
-        }
-
-
-    }
-
-}
 
 @Composable
 fun Greeting(name: String) {
@@ -54,59 +42,59 @@ fun Greeting(name: String) {
 
 
 @Composable
-fun MyScreenContent(names: List<String> = listOf("Tonnie", "GOAT", "Antony")) {
+fun MyScreenContent(names: List<String> = listOf("GOAT", "Tonnie")) {
 
-
+//wrap in Column for vertical orientation.
     Column {
-
         for (name in names) {
+
             Greeting(name)
 
-            Divider(color = Color.Red)
-            Spacer(modifier = Modifier.height(8.dp))
+            //add Divider and Spacer
+            Divider(color = Color.Red, thickness = 2.dp)
+            Spacer(Modifier.height(8.dp))
+
         }
-        Divider(color = Color.Transparent, thickness = 32.dp)
+
         Counter()
     }
-
 }
 
 
 
+
+
 @Composable
-fun Counter(){
+fun Counter() {
 
-
+//initialize count using remember 
+    
     val count = remember{ mutableStateOf(0)}
-
-
-    Button(onClick = { count.value++ }) {
-
-        Text("I've been clicked ${count.value} times")
+    
+    //use count.value to retrieve counter value
+    Button(onClick = { count.value ++ }) {
+        
+        Text(text = "Have been clicked ${count.value} times")
     }
-
+  
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     ComposeIntroTheme {
-        MyApp {
+        AppContainer {
             MyScreenContent()
-        }
-    }
+	}    }
 }
 
 
-
-
-
 @Composable
-fun AppContainer(fxn:@Composable ()-> Unit){
+fun AppContainer(fxn: @Composable () -> Unit) {
 
-    ComposeIntroTheme{
+    ComposeIntroTheme {
 
-        Surface(color = Color.Black) {
+        Surface(color = Color.Yellow) {
             fxn()
         }
     }
