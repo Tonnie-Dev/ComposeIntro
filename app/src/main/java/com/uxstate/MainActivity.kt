@@ -1,18 +1,18 @@
 package com.uxstate
 
-import android.graphics.Paint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.uxstate.ui.theme.ComposeIntroTheme
 
 
@@ -38,57 +38,34 @@ fun Greeting(name: String) {
 }
 
 
-
-
-
 @Composable
 fun MyScreenContent(
-    cities: List<String> = listOf(
-        "Tokyo",
-        "London",
-        "Conakry",
-        "Nairobi",
-        "Pretoria",
-        "Brasilia"
-    )
-) {
+    names: List<String> = List(1000){ index -> "Hello Android #$index"} ) {
 
-    Column {
-        for (city in cities) {
+    Column(modifier = Modifier.fillMaxHeight()) {
+        Column(modifier = Modifier.weight(1f)) {
+            for (name in names) {
 
 
-            Text(text = city, modifier = Modifier.padding(8.dp))
-            Divider(color = Color.Green, thickness = 2.dp)
+                Greeting(name)
+                Divider(color = Color.Green, thickness = 2.dp)
 
+            }
+
+            //Spacer(Modifier.height(8.dp))
         }
-
-        Spacer(Modifier.height(8.dp))
-
 
         // create internal count value making this Composable Stateful
         var count by remember { mutableStateOf(0) }
 
         //Call CounterHoisted pass in the count and modify/update the count
         CounterHoisted(count) { newCount -> count = newCount }
+
     }
 }
 
 
-/*
-@Composable
-fun Counter() {
 
-//initialize count using remember 
-    
-    val count = remember{ mutableStateOf(0)}
-    
-    //use count.value to retrieve counter value
-    Button(onClick = { count.value ++ }) {
-        
-        Text(text = "Have been clicked ${count.value} times")
-    }
-  
-}*/
 
 @Preview(showBackground = true)
 @Composable
@@ -106,7 +83,7 @@ fun AppContainer(fxn: @Composable () -> Unit) {
 
     ComposeIntroTheme {
 
-        Surface(color = Color.Yellow, modifier = Modifier.fillMaxHeight()) {
+        Surface(color = Color.Yellow) {
             fxn()
         }
     }
@@ -120,7 +97,12 @@ fun CounterHoisted(count: Int, updateCounter: (Int) -> Unit) {
 
     Row {
         //invoke updateCounter fxn passing in the count value
-        Button(onClick = { updateCounter(count + 1) }) {
+        Button(
+            onClick = { updateCounter(count + 1) },
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = if (count > 3) Color.Green else Color.White
+            )
+        ) {
 
             //Display Text
             Text(text = "Button Clicked $count times")
@@ -129,3 +111,5 @@ fun CounterHoisted(count: Int, updateCounter: (Int) -> Unit) {
     }
 
 }
+
+
