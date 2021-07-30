@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -40,19 +42,14 @@ fun Greeting(name: String) {
 
 @Composable
 fun MyScreenContent(
-    names: List<String> = List(1000){ index -> "Hello Android #$index"} ) {
+    names: List<String> = List(27){ index -> "Hello Android #$index"} ) {
 
     Column(modifier = Modifier.fillMaxHeight()) {
+
         Column(modifier = Modifier.weight(1f)) {
-            for (name in names) {
+ NameList(names)
 
 
-                Greeting(name)
-                Divider(color = Color.Green, thickness = 2.dp)
-
-            }
-
-            //Spacer(Modifier.height(8.dp))
         }
 
         // create internal count value making this Composable Stateful
@@ -113,3 +110,17 @@ fun CounterHoisted(count: Int, updateCounter: (Int) -> Unit) {
 }
 
 
+@Composable
+fun NameList(names: List<String>){
+
+    LazyColumn{
+
+        items(items =names){
+
+            name ->
+
+            Greeting(name)
+            Divider(thickness = 3.dp, color = Color.Magenta)
+        }
+    }
+}
